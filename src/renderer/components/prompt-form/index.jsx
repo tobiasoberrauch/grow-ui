@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react';
-import { Paper, FloatingActionButton } from 'material-ui';
+import React, {PropTypes} from 'react';
+import {FloatingActionButton} from 'material-ui';
 import promptFormStyles from '../../styles/components/prompt-form';
 import GetComponentStyle from '../mixins/get-component-style';
 import QuestionRenderer from './question-renderer-mixin.jsx';
@@ -66,7 +66,7 @@ export default React.createClass({
   },
 
   render: function () {
-    const { questions } = this.props;
+    const {questions} = this.props;
 
     if (questions.length === 0) {
       return null;
@@ -78,23 +78,14 @@ export default React.createClass({
     const getStyle = this.getComponentStyle(this.state.visibility);
     const promptFormStyle = getStyle(
       {
-        position: 'absolute',
-        top: promptFormStyles.margin,
-        left: '50%',
         width: promptFormStyles.width,
         minHeight: promptFormStyles.height,
-        backgroundColor: '#FFF',
-        marginLeft: -(promptFormStyles.width / 2),
         display: 'none'
       },
       {
         display: 'block'
       }
     );
-    const promptFormFormStyle = {
-      width: '100%',
-      height: '100%'
-    };
     const doneButtonStyle = {
       position: 'absolute',
       top: 122,
@@ -102,15 +93,15 @@ export default React.createClass({
     };
 
     return (
-      <Paper style={promptFormStyle}>
-        <form style={promptFormFormStyle}>
+      <div style={promptFormStyle}>
+        <form>
           <div>{prompts}</div>
           <FloatingActionButton
             style={doneButtonStyle}
             iconClassName="muidocs-icon-action-done"
-            onClick={this._onClick} />
+            onClick={this._onClick}/>
         </form>
-      </Paper>
+      </div>
     );
   }
 

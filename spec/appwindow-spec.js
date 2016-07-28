@@ -140,7 +140,7 @@ describe('AppWindow', function () {
       assert(browserWindow.show.calledOnce);
     });
 
-    xit('init yoProcess', function () {
+    xit('init process', function () {
       // TODO
     });
   });
@@ -184,13 +184,13 @@ describe('AppWindow', function () {
     });
   });
 
-  describe('#initYoProcess', function () {
+  describe('#initProcess', function () {
     it('do not create child process in test mode', function () {
       this.appWindow.loadSettings.isSpec = true;
       this.appWindow.sendCommandToProcess = this.sandbox.stub();
-      this.appWindow.initYoProcess();
+      this.appWindow.initProcess();
 
-      assert.equal(this.appWindow.yoProcess, null);
+      assert.equal(this.appWindow.process, null);
       assert(this.appWindow.sendCommandToProcess.notCalled);
     });
   });
@@ -234,10 +234,10 @@ describe('AppWindow', function () {
     });
   });
 
-  xdescribe('#initYoProcess', function () {
+  xdescribe('#initProcess', function () {
   });
 
-  xdescribe('#killYoProcess', function () {
+  xdescribe('#killProcess', function () {
   });
 
   xdescribe('#sendCommandToProcess', function () {

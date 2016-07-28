@@ -9,7 +9,7 @@ import {
 } from '../actions/action-types';
 
 const initialState = {
-  generators: null,
+  generators: [],
   actualFormType: '',
   questions: [],
   selectedGenerator: {},

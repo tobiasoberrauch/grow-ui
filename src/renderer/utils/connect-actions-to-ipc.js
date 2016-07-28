@@ -1,5 +1,4 @@
-import { ipcRenderer } from 'electron';
-
+import {ipcRenderer} from 'electron';
 import {
   GENERATOR_INSTALLED_GENERATORS,
   GENERATOR_PROMPT_QUESTIONS,
@@ -7,7 +6,6 @@ import {
   GENERATOR_DONE,
   FOLDER_SELECTED
 } from '../actions/action-types';
-
 import * as BrowserActions from '../actions/browser-actions';
 
 // List events to listen from browser and broadcast to view
@@ -19,7 +17,7 @@ const BrowserEvents = {
   [FOLDER_SELECTED]: 'folderSelected'
 };
 
-export default function ({ dispatch }) {
+export default function ({dispatch}) {
   Object.keys(BrowserEvents).forEach((event) => {
     ipcRenderer.on(event, function (e, data) {
       let eventFn = BrowserEvents[event];

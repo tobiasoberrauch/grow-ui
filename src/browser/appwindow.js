@@ -15,15 +15,15 @@ function AppWindow(options) {
   };
   this.loadSettings = _.extend(this.loadSettings, options);
 
-  var windowOpts = {
+  var windowOptions = {
     webPreferences: {
       subpixelFontScaling: true,
       directWrite: true
     }
   };
-  windowOpts = _.extend(windowOpts, this.loadSettings);
+  windowOptions = _.extend(windowOptions, this.loadSettings);
 
-  this.window = new BrowserWindow(windowOpts);
+  this.window = new BrowserWindow(windowOptions);
   this.handleEvents();
 }
 
@@ -42,7 +42,7 @@ AppWindow.prototype.show = function () {
   this.window.loadURL(targetUrl);
 
   this.window.webContents.on('did-finish-load', function () {
-    this.initYoProcess();
+    this.initProcess();
   }.bind(this));
 
   this.window.show();
@@ -71,7 +71,7 @@ AppWindow.prototype.handleEvents = function () {
     this.emit('closed', e);
   }.bind(this));
 
-  this.on('generator-cancel', this.killYoProcess);
+  this.on('generator-cancel', this.killProcess);
   this.on('open-dialog', this.selectTargetDirectory);
   this.on('generator:done', this.openProject);
 };
@@ -98,14 +98,14 @@ AppWindow.prototype.openProject = function (cwd) {
   shell.showItemInFolder(cwd);
 };
 
-AppWindow.prototype.initYoProcess = function () {
+AppWindow.prototype.initProcess = function () {
   if (this.loadSettings.isSpec) {
     return;
   }
 
-  this.yoProcess = fork(path.join(__dirname, 'yo', 'yo.js'));
+  this.process = fork(path.join(__dirname, '..', 'provisioner', 'dev', 'index.js'));
 
-  this.yoProcess.on('message', function (msg) {
+  this.process.on('message', function (msg) {
     console.log('APP', msg);
 
     this.sendCommandToBrowserWindow(msg.event, msg.data);
@@ -116,9 +116,9 @@ AppWindow.prototype.initYoProcess = function () {
   this.sendCommandToProcess('generator:init');
 };
 
-AppWindow.prototype.killYoProcess = function () {
-  if (this.yoProcess && this.yoProcess.pid) {
-    killChildProcess(this.yoProcess.pid, function (err) {
+AppWindow.prototype.killProcess = function () {
+  if (this.process && this.process.pid) {
+    killChildProcess(this.process.pid, function (err) {
       if (err) {
         console.log(err);
       }
@@ -141,7 +141,7 @@ AppWindow.prototype.sendCommandToBrowserWindow = function () {
 AppWindow.prototype.sendCommandToProcess = function (name) {
   var args = Array.prototype.slice.call(arguments, 1);
 
-  this.yoProcess.send({
+  this.process.send({
     action: name,
     args: args
   });

@@ -1,6 +1,7 @@
 export default {
-  width: 400,
-  height: 300,
-  margin: 24
+  width: '100%',
+  height: '100%',
+  margin: 24,
+  padding: 24
 };
 

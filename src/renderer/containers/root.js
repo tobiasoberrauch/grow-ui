@@ -1,6 +1,6 @@
 import React from 'react';
-import App from './app';
-import { Provider } from 'react-redux';
+import App from './App';
+import {Provider} from 'react-redux';
 import configureStore from '../stores/configure-store';
 import tapEventPlugin from 'react-tap-event-plugin';
 import connectActionsToIpc from '../utils/connect-actions-to-ipc';

@@ -1,33 +1,28 @@
-import React, { PropTypes } from 'react';
-import { Card, CardTitle } from 'material-ui';
-import GridItem from './grid-item.jsx';
+import React from 'react';
+import {Card, CardTitle} from 'material-ui';
+import GridItem from './GridItem';
 
 export default React.createClass({
   propTypes: {
-    selectedGenerator: PropTypes.object,
-    generators: PropTypes.array,
-    gridItemSelected: PropTypes.func
+    selectedGenerator: React.PropTypes.object,
+    items: React.PropTypes.array,
+    itemSelected: React.PropTypes.func
   },
 
   render: function () {
-    const { generators } = this.props;
+    const {items} = this.props;
 
-    // TODO: Display proper error message
-    if (!generators) {
-      return <div />;
-    }
-
-    if (!generators.length) {
+    if (!(items && items.length)) {
       return (
         <Card>
           <CardTitle
-            title="No installed generators found!"
-            subtitle="Please install at least one yeoman generator to continue."/>
+            title="No installed items found!"
+            subtitle="Please install at least one generator to continue."/>
         </Card>
       );
     }
 
-    const items = generators.map((item) => {
+    const gridItems = items.map(item => {
       return (
         <GridItem
           key={item.name}
@@ -36,7 +31,7 @@ export default React.createClass({
           active={item.name === this.props.selectedGenerator.name}
           enabled={!this.props.selectedGenerator.name}
           isCompatible={item.isCompatible}
-          gridItemSelected={this.props.gridItemSelected} />
+          gridItemSelected={this.props.itemSelected}/>
       );
     });
 
@@ -48,7 +43,7 @@ export default React.createClass({
 
     return (
       <div style={gridStyle}>
-        {items}
+        {gridItems}
       </div>
     );
   }
