@@ -9,8 +9,9 @@ export default class ApplicationMenu extends EventEmitter {
     super();
 
     var menuJson = season.resolve(path.join(__dirname, '..', '..', 'menus', process.platform + '.json'));
+console.log('menuJson', menuJson);
     var template = season.readFileSync(menuJson);
-
+console.log('template-- ', this.translateTemplate(template.menu, options.pkg));
     this.template = this.translateTemplate(template.menu, options.pkg);
   }
 
@@ -39,5 +40,7 @@ export default class ApplicationMenu extends EventEmitter {
         this.translateTemplate(item.submenu, pkgJson);
       }
     });
+
+    return template;
   }
 }
