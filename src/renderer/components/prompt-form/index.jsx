@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {FloatingActionButton} from 'material-ui';
+import {Icon, FABButton} from 'react-mdl';
 import promptFormStyles from '../../styles/components/prompt-form';
 import GetComponentStyle from '../mixins/get-component-style';
 import QuestionRenderer from './question-renderer-mixin.jsx';
@@ -86,20 +86,14 @@ export default React.createClass({
         display: 'block'
       }
     );
-    const doneButtonStyle = {
-      position: 'absolute',
-      top: 122,
-      right: 20
-    };
 
     return (
       <div style={promptFormStyle}>
         <form>
           <div>{prompts}</div>
-          <FloatingActionButton
-            style={doneButtonStyle}
-            iconClassName="muidocs-icon-action-done"
-            onClick={this._onClick}/>
+          <FABButton colored onClick={this._onClick}>
+            <Icon name="add"/>
+          </FABButton>
         </form>
       </div>
     );

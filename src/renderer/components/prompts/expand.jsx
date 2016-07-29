@@ -1,5 +1,5 @@
 import React from 'react';
-import {RadioButton, RadioButtonGroup} from 'material-ui';
+import {RadioGroup, Radio} from 'react-mdl';
 import PromptMixin from './prompt-mixin';
 import Container from '../prompt-form/container';
 import Label from '../prompt-form/label';
@@ -31,7 +31,7 @@ export default React.createClass({
       const key = this._getKeyName(choice.name);
 
       return (
-        <RadioButton
+        <Radio
           key={key}
           name={this.props.name}
           value={choice.value}
@@ -44,14 +44,11 @@ export default React.createClass({
 
     return (
       <Container>
-        <Label
-          message={this.props.message}
-          color={this.props.color}
-        />
+        <Label message={this.props.message} color={this.props.color}/>
         <div style={styles.list}>
-          <RadioButtonGroup name={this.props.name} defaultSelected={this.state.answer}>
+          <RadioGroup name={this.props.name} defaultSelected={this.state.answer}>
             {choices}
-          </RadioButtonGroup>
+          </RadioGroup>
         </div>
       </Container>
     );

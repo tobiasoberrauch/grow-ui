@@ -1,16 +1,16 @@
 import React from 'react';
-import {Card, CardTitle} from 'material-ui';
+import {Card, CardTitle, Cell, Grid} from 'react-mdl';
 import GridItem from './GridItem';
 
 export default React.createClass({
   propTypes: {
-    selectedGenerator: React.PropTypes.object,
     items: React.PropTypes.array,
-    itemSelected: React.PropTypes.func
+    selectedItem: React.PropTypes.object,
+    onItemSelect: React.PropTypes.func
   },
 
   render: function () {
-    const {items} = this.props;
+    const {items, onItemSelect, selectedItem} = this.props;
 
     if (!(items && items.length)) {
       return (
@@ -24,27 +24,23 @@ export default React.createClass({
 
     const gridItems = items.map(item => {
       return (
-        <GridItem
-          key={item.name}
-          name={item.name}
-          version={item.version}
-          active={item.name === this.props.selectedGenerator.name}
-          enabled={!this.props.selectedGenerator.name}
-          isCompatible={item.isCompatible}
-          gridItemSelected={this.props.itemSelected}/>
+        <Cell col={4}>
+          <GridItem
+            name={item.name}
+            description={item.description}
+            version={item.version}
+            active={item.name === selectedItem.name}
+            enabled={!selectedItem.name}
+            isCompatible={item.isCompatible}
+            onItemSelect={onItemSelect}/>
+        </Cell>
       );
     });
 
-    const gridStyle = {
-      display: 'flex',
-      flexFlow: 'row wrap',
-      justifyContent: 'space-around'
-    };
-
     return (
-      <div style={gridStyle}>
+      <Grid>
         {gridItems}
-      </div>
+      </Grid>
     );
   }
 });

@@ -1,31 +1,17 @@
 import React from 'react';
-import mui from 'material-ui';
-import AppHeader from './AppHeader';
+import {Layout} from 'react-mdl';
 import AppContent from './AppContent';
-import AppFooter from './AppFooter';
-
-let themeManager = mui.Styles.ThemeManager;
+import AppHeader from './AppHeader';
 
 const App = React.createClass({
   displayName: 'App',
 
-  childContextTypes: {
-    muiTheme: React.PropTypes.object
-  },
-
-  getChildContext() {
-    return {
-      muiTheme: themeManager.getMuiTheme(mui.Styles.LightRawTheme)
-    };
-  },
-
   render() {
     return (
-      <main>
-        <AppHeader />
+      <Layout fixedHeader style={{ backgroundColor: '#fafafa' }}>
+        <AppHeader title="Flow"/>
         <AppContent />
-        <AppFooter />
-      </main>
+      </Layout>
     );
   }
 });

@@ -1,11 +1,8 @@
 import {sample} from 'lodash';
 import React, {PropTypes} from 'react';
-import color from 'color';
-import {Paper} from 'material-ui';
+import {Card, CardMenu, CardTitle, CardActions, Button, CardText, IconButton} from 'react-mdl';
 import {humanizeEventName as humanize} from 'underscore-plus';
 import insight from '../utils/insight.js';
-import colors from '../utils/colors';
-import styles from '../styles/components/grid-item';
 import GetComponentStyle from './mixins/get-component-style';
 
 function getFormattedName(name) {
@@ -17,100 +14,96 @@ export default React.createClass({
     name: PropTypes.string,
     version: PropTypes.string,
     active: PropTypes.bool,
+    enabled: PropTypes.bool,
     isCompatible: PropTypes.bool,
-    gridItemSelected: PropTypes.func
+    onItemSelect: PropTypes.func,
+    description: PropTypes.string
   },
 
-  getInitialState: function () {
-    return {
-      color: sample(colors),
-      zDepth: 1
-    };
+  getInitialState: () => {
+    return {};
   },
 
-  mixins: [
-    GetComponentStyle
-  ],
+  mixins: [GetComponentStyle],
 
-  _onClick: function () {
-    const {name, version, isCompatible, gridItemSelected} = this.props;
+  onClick: () => {
+    const {name, version, isCompatible, onItemSelect} = this.props;
 
-    const generatorName = name.replace('generator-', '');
-    const actionName = `run-${generatorName}-${version}`;
-    insight.sendEvent('generator', actionName, `Run ${generatorName} in version ${version}`);
+    const itemName = name.replace('generator-', '');
+    const actionName = `run-${itemName}-${version}`;
+    insight.sendEvent('generator', actionName, `Run ${itemName} in version ${version}`);
 
-    gridItemSelected({
-      name,
-      isCompatible,
-      color: color(this.state.color).darken(0.2).hexString()
-    });
+    onItemSelect({name, isCompatible});
 
     document.body.scrollTop = 0;
   },
 
-  _onMouseOver: function () {
-    this.setState({
-      zDepth: 4
-    });
+  onMouseOver: () => {
+    this.setState({});
   },
 
-  _onMouseOut: function () {
-    this.setState({
-      zDepth: 1
+  onMouseOut: () => {
+    this.setState({});
+  },
+
+  getCardMenu: () => {
+    return (
+      <CardMenu style={{color: '#fff'}}>
+        <IconButton name="share"/>
+        <IconButton name="event"/>
+      </CardMenu>
+    );
+  },
+
+  getCardActions: () => {
+    const actions = [{
+      label: 'Installieren',
+      callback: () => {
+        console.log('install', arguments);
+      }
+    }, {
+      label: 'Details',
+      callback: () => {
+        console.log('install', arguments);
+      }
+    }];
+    if (actions.length === 0) {
+      return '';
+    }
+
+    let cardActions = actions.map(action => {
+      return <Button onClick="action.callback">{action.label}</Button>;
     });
+
+    return <CardActions border>{cardActions}</CardActions>;
   },
 
   render: function () {
+    const {description, name} = this.props;
 
-    const headerHeight = 300;
-    const getStyle = this.getComponentStyle(this.props.active);
+    const cardStyles = {
+      //pointerEvents: 'none',
+      cursor: 'default'
+    };
 
-    // TODO: Investigate perf on this, checking clientHeight every render is expensive
-    const contentHeight =
-      window.document.getElementById('content').clientHeight + headerHeight;
-    const generatorName = getFormattedName(this.props.name);
-    let gridItemStyle = getStyle(
-      styles.gridItem,
-      Object.assign(
-        {}, styles.gridItemActive,
-        {minHeight: contentHeight}
-      )
-    );
-    const gridItemImgStyle = getStyle(
-      Object.assign({}, styles.img,
-        {backgroundImage: `url(img/${this.props.name}.png)`}
-      ),
-      styles.imgActive
-    );
-    const gridItemBgStyle = getStyle(
-      Object.assign({}, styles.bg,
-        {backgroundColor: this.state.color}
-      ),
-      styles.bgActive
-    );
-    const gridItemH3Style = getStyle(
-      styles.h3,
-      styles.h3Active
-    );
-
-    // disables visual grid items when a generator is open
-    if (!this.props.enabled) {
-      gridItemStyle = Object.assign({}, gridItemStyle,
-        {pointerEvents: 'none', cursor: 'default'}
-      );
-    }
+    const cardTitle = getFormattedName(name);
+    const cardTitleStyles = {
+      background: `rgb(63,81,181) url(img/generator-angular.png) center / cover`,
+      height: '150px'
+    };
 
     return (
-      <Paper
-        style={gridItemStyle}
-        zDepth={this.state.zDepth}
-        onMouseOver={this._onMouseOver}
-        onMouseOut={this._onMouseOut}
-        onClick={this._onClick}>
-        <div style={gridItemBgStyle}/>
-        <figure style={gridItemImgStyle}/>
-        <h3 style={gridItemH3Style}>{generatorName}</h3>
-      </Paper>
+      <Card
+        style={cardStyles}
+        shadow={2}
+        onMouseOver={this.onMouseOver}
+        onMouseOut={this.onMouseOut}
+        onClick={this.onClick}>
+        <CardTitle style={cardTitleStyles}>{cardTitle}</CardTitle>
+        <CardText>{description}</CardText>
+        {this.getCardActions()}
+        {this.getCardMenu()}
+      </Card>
     );
   }
 });

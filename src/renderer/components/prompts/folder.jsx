@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {RaisedButton} from 'material-ui';
+import {Button} from 'react-mdl';
 import PromptMixin from './prompt-mixin';
 import Container from '../prompt-form/container';
 import Label from '../prompt-form/label';
@@ -31,15 +31,13 @@ export default React.createClass({
           color={this.props.color}
         />
         <div className="prompt-elements">
-          <RaisedButton
-            label="Select a folder"
+          <Button
+            raised
             style={styles.button}
             primary={!!isEmpty}
             onClick={this._onClick}
-          />
-          <span style={styles.display}>
-            {this.props.selectedFolder}
-          </span>
+          >Select a folder</Button>
+          <span style={styles.display}>{this.props.selectedFolder}</span>
         </div>
       </Container>
     );

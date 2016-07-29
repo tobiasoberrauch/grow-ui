@@ -1,50 +1,23 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {Content} from 'react-mdl';
 import {bindActionCreators} from 'redux';
 import Grid from '../components/Grid';
-import Loader from '../components/Loader';
-import PromptForm from '../components/prompt-form/index.jsx';
 import * as GridActions from '../actions/grid-actions';
-import * as PromptFormActions from '../actions/prompt-form-actions';
 
 const AppContent = React.createClass({
   displayName: 'AppContent',
 
   render() {
-    const {generators, generator, gridActions, selectedFolder} = this.props;
-    const {selectedGenerator, actualFormType, questions, isLoading} = generator;
-
-    const promptContainerStyle = {
-      display: selectedGenerator.name ? 'block' : 'none',
-      paddingTop: '56px'
-    };
-
-    const gridStyle = {
-      display: selectedGenerator.name ? 'none' : 'block',
-      paddingTop: '76px'
-    };
-
+    const {generators, generator, gridActions} = this.props;
+    
     return (
-      <section>
-        <div className="content" style={gridStyle}>
-          <Grid
-            selectedGenerator={selectedGenerator}
-            items={generators}
-            itemSelected={gridActions.gridItemSelected}/>
-        </div>
-        <div className="content" style={promptContainerStyle}>
-          <Loader isLoading={isLoading}/>
-          <PromptForm
-            generator={selectedGenerator}
-            questions={questions}
-            type={actualFormType}
-            selectedFolder={selectedFolder}
-            selectFolder={PromptFormActions.selectFolder}
-            submitSelectedFolder={PromptFormActions.submitSelectedFolder}
-            submitForm={PromptFormActions.submitForm}
-          />
-        </div>
-      </section>
+      <Content>
+        <Grid
+          items={generators}
+          selectedItem={generator.selectedGenerator}
+          onItemSelect={gridActions.gridItemSelected}/>
+      </Content>
     );
   }
 });

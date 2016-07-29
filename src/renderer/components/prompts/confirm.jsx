@@ -1,5 +1,5 @@
 import React from 'react';
-import {RaisedButton} from 'material-ui';
+import {Button} from 'react-mdl';
 import PromptMixin from './prompt-mixin';
 import Container from '../prompt-form/container';
 import Label from '../prompt-form/label';
@@ -34,21 +34,10 @@ export default React.createClass({
 
     return (
       <Container>
-        <Label
-          message={this.props.message}
-          color={this.props.color}
-        />
+        <Label message={this.props.message} color={this.props.color}/>
         <div style={styles.options}>
-          <RaisedButton
-            label="No"
-            onClick={this._onClickNo}
-            labelStyle={!this.state.answer && styles.noActive}
-          />
-          <RaisedButton
-            label="Yes"
-            onClick={this._onClickYes}
-            labelStyle={this.state.answer && styles.yesActive}
-          />
+          <Button onClick={this._onClickNo} labelStyle={!this.state.answer && styles.noActive}>No</Button>
+          <Button onClick={this._onClickYes} labelStyle={this.state.answer && styles.yesActive}>Yes</Button>
         </div>
       </Container>
     );

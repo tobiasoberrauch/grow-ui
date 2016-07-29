@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextField} from 'material-ui';
+import {Textfield} from 'react-mdl';
 import PromptMixin from './prompt-mixin';
 import Container from '../prompt-form/container';
 import Label from '../prompt-form/label';
@@ -29,7 +29,7 @@ export default React.createClass({
           message={this.props.message}
           color={this.props.color}
         />
-        <TextField
+        <Textfield
           style={styles.textfield}
           type={this.props.type}
           name={this.props.name}

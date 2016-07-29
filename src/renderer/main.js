@@ -1,19 +1,29 @@
 import insight from './utils/insight';
 import {render} from 'react-dom';
-import Root from './containers/root';
+import React from 'react';
+import App from './containers/App';
+import {Provider} from 'react-redux';
+import configureStore from './stores/configure-store';
+import tapEventPlugin from 'react-tap-event-plugin';
+import connectActionsToIpc from './utils/connect-actions-to-ipc';
 
-var main = document.createElement('main');
-main.id = 'content';
-document.body.appendChild(main);
+// Set up tap events
+tapEventPlugin();
 
-var style = document.createElement('link');
-style.rel = 'stylesheet';
-style.type = 'text/css';
-style.href = 'fonts.css';
-document.head.appendChild(style);
+const store = configureStore();
+
+// Starts communication channel with atom-shell browser side
+connectActionsToIpc(store);
+
+// Export React so the devtools can find it
+(window !== window.top ? window.top : window).React = React;
+
 
 insight.init(function () {
-  // React entry-point
-
-  render(<Root />, document.getElementById('content'));
+  render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    document.getElementById('content')
+  );
 });
