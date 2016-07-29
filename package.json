@@ -5,7 +5,7 @@
   "appBundleId": "ag.tob.grow",
   "helperBundleId": "ag.tob.grow.helper",
   "description": "An app made with Electron that scaffolds projects using Yeoman",
-  "author": "The Yeoman Team",
+  "author": "The Grow Team",
   "main": "src/browser/main.js",
   "bugs": "https://github.com/tobiasoberrauch/grow-ui/issues",
   "dependencies": {

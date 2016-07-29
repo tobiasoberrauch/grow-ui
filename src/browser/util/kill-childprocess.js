@@ -1,6 +1,6 @@
 var psTree = require('ps-tree');
 
-module.exports = function kill(pid, signal, cb) {
+export default (pid, signal, cb) => {
   if (!pid) {
     throw new Error('You must provide pid to kill.');
   }
@@ -16,12 +16,12 @@ module.exports = function kill(pid, signal, cb) {
 
   signal = signal || 'SIGKILL';
 
-  psTree(pid, function (err, children) {
+  psTree(pid, (err, children) => {
     if (err) {
       return cb(err);
     }
 
-    children.forEach(function (child) {
+    children.forEach((child) => {
       process.kill(child.PID, signal);
     });
     process.kill(pid, signal);

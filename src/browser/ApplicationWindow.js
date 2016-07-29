@@ -9,142 +9,137 @@ const fork = require('child_process').fork;
 const _ = require('underscore-plus');
 const killChildProcess = require('./util/kill-childprocess');
 
-function AppWindow(options) {
-  this.loadSettings = {
-    bootstrapScript: require.resolve('../renderer/main')
-  };
-  this.loadSettings = _.extend(this.loadSettings, options);
+export default class ApplicationWindow extends EventEmitter {
+  constructor(options) {
+    super();
 
-  var windowOptions = {
-    webPreferences: {
-      subpixelFontScaling: true,
-      directWrite: true
-    }
-  };
-  windowOptions = _.extend(windowOptions, this.loadSettings);
+    this.loadSettings = {
+      bootstrapScript: require.resolve('../renderer/main')
+    };
+    this.loadSettings = _.extend(this.loadSettings, options);
 
-  this.window = new BrowserWindow(windowOptions);
-  this.handleEvents();
-}
+    let windowOptions = {
+      webPreferences: {
+        subpixelFontScaling: true,
+        directWrite: true
+      }
+    };
+    windowOptions = _.extend(windowOptions, this.loadSettings);
 
-_.extend(AppWindow.prototype, EventEmitter.prototype);
-
-AppWindow.prototype.show = function () {
-  var targetPath = path.resolve(__dirname, '..', '..', 'static', 'index.html');
-  var targetUrl = url.format({
-    protocol: 'file',
-    pathname: targetPath,
-    slashes: true,
-    query: {
-      loadSettings: JSON.stringify(this.loadSettings)
-    }
-  });
-  this.window.loadURL(targetUrl);
-
-  this.window.webContents.on('did-finish-load', function () {
-    this.initProcess();
-  }.bind(this));
-
-  this.window.show();
-};
-
-AppWindow.prototype.reload = function () {
-  this.window.webContents.reload();
-};
-
-AppWindow.prototype.toggleFullScreen = function () {
-  this.window.setFullScreen(!this.window.isFullScreen());
-};
-
-AppWindow.prototype.toggleDevTools = function () {
-  this.window.toggleDevTools();
-};
-
-AppWindow.prototype.close = function () {
-  this.window.close();
-  this.window = null;
-};
-
-AppWindow.prototype.handleEvents = function () {
-
-  this.window.on('closed', function (e) {
-    this.emit('closed', e);
-  }.bind(this));
-
-  this.on('generator-cancel', this.killProcess);
-  this.on('open-dialog', this.selectTargetDirectory);
-  this.on('generator:done', this.openProject);
-};
-
-AppWindow.prototype.selectTargetDirectory = function () {
-  var opts = {
-    title: 'Select a folder to generate the project into',
-    properties: ['openDirectory', 'createDirectory']
-  };
-
-  dialog.showOpenDialog(this.window, opts, function (filenames) {
-    if (!filenames) {
-      return;
-    }
-    this.sendCommandToBrowserWindow('generator:directory-selected', filenames.shift());
-  }.bind(this));
-};
-
-AppWindow.prototype.openProject = function (cwd) {
-  if (!cwd) {
-    return;
+    this.window = new BrowserWindow(windowOptions);
+    this.handleEvents();
   }
 
-  shell.showItemInFolder(cwd);
-};
-
-AppWindow.prototype.initProcess = function () {
-  if (this.loadSettings.isSpec) {
-    return;
-  }
-
-  this.process = fork(path.join(__dirname, '..', 'provisioner', 'yo', 'index.js'));
-
-  this.process.on('message', function (msg) {
-    console.log('APP', msg);
-
-    this.sendCommandToBrowserWindow(msg.event, msg.data);
-    this.emitCommandToAppWindow(msg.event, msg.data);
-
-  }.bind(this));
-
-  this.sendCommandToProcess('generator:init');
-};
-
-AppWindow.prototype.killProcess = function () {
-  if (this.process && this.process.pid) {
-    killChildProcess(this.process.pid, function (err) {
-      if (err) {
-        console.log(err);
+  show() {
+    var targetPath = path.resolve(__dirname, '..', '..', 'static', 'index.html');
+    var targetUrl = url.format({
+      protocol: 'file',
+      pathname: targetPath,
+      slashes: true,
+      query: {
+        loadSettings: JSON.stringify(this.loadSettings)
       }
     });
+    this.window.loadURL(targetUrl);
+
+    this.window.webContents.on('did-finish-load', () => {
+      this.initProcess();
+    });
+
+    this.window.show();
   }
-};
 
-AppWindow.prototype.emitCommandToAppWindow = function (event, data) {
-  if (!event) {
-    return;
+  reload() {
+    this.window.webContents.reload();
   }
 
-  this.emit(event, data);
-};
+  toggleFullScreen() {
+    this.window.setFullScreen(!this.window.isFullScreen());
+  }
 
-AppWindow.prototype.sendCommandToBrowserWindow = function () {
-  this.window.webContents.send.apply(this.window.webContents, arguments);
-};
+  toggleDevTools() {
+    this.window.toggleDevTools();
+  }
 
-AppWindow.prototype.sendCommandToProcess = function (name) {
-  var args = Array.prototype.slice.call(arguments, 1);
+  close() {
+    this.window.close();
+    this.window = null;
+  }
 
-  this.process.send({
-    action: name,
-    args: args
-  });
-};
+  handleEvents() {
+    this.window.on('closed', event => this.emit('closed', event));
 
-module.exports = AppWindow;
+    this.on('generator-cancel', this.killProcess);
+    this.on('open-dialog', this.selectTargetDirectory);
+    this.on('generator:done', this.openProject);
+  }
+
+  selectTargetDirectory() {
+    var options = {
+      title: 'Select a folder to generate the project into',
+      properties: ['openDirectory', 'createDirectory']
+    };
+
+    dialog.showOpenDialog(this.window, options, fileNames => {
+      if (!fileNames) {
+        return;
+      }
+      this.sendCommandToBrowserWindow('generator:directory-selected', fileNames.shift());
+    });
+  }
+
+  openProject(cwd) {
+    if (!cwd) {
+      return;
+    }
+
+    shell.showItemInFolder(cwd);
+  }
+
+  initProcess() {
+    if (this.loadSettings.isSpec) {
+      return;
+    }
+
+    this.process = fork(path.join(__dirname, '..', 'provisioner', 'yo', 'index.js'));
+
+    this.process.on('message', (message) => {
+      console.log('APP', message);
+
+      this.sendCommandToBrowserWindow(message.event, message.data);
+      this.emitCommandToAppWindow(message.event, message.data);
+
+    });
+
+    this.sendCommandToProcess('generator:init');
+  }
+
+  killProcess() {
+    if (this.process && this.process.pid) {
+      killChildProcess(this.process.pid, (err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+    }
+  }
+
+  emitCommandToAppWindow(event, data) {
+    if (!event) {
+      return;
+    }
+
+    this.emit(event, data);
+  }
+
+  sendCommandToBrowserWindow() {
+    this.window.webContents.send(...arguments);
+  }
+
+  sendCommandToProcess(name, ...args) {
+    this.process.send({
+      action: name,
+      args: args
+    });
+  }
+}

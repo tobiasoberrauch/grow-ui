@@ -1,6 +1,6 @@
-import { app, BrowserWindow, ipcMain, shell } from 'electron';
+import {app, BrowserWindow, ipcMain, shell} from 'electron';
 import path from 'path';
-import { EventEmitter } from 'events';
+import {EventEmitter} from 'events';
 import _ from 'underscore-plus';
 import ApplicationMenu from './ApplicationMenu';
 import ApplicationWindow from './ApplicationWindow';
@@ -68,6 +68,7 @@ class Application extends EventEmitter {
     });
   }
 
+
   /**
    * Opens up a new applicationWindow and runs the application.
    */
@@ -85,40 +86,24 @@ class Application extends EventEmitter {
       pkg: this.pkgJson
     });
     this.menu.attachToWindow(applicationWindow);
-    this.menu.on('application:quit', function () {
-      app.quit();
-    });
-
-    this.menu.on('application:report-issue', () => {
-      shell.openExternal(this.pkgJson.bugs);
-    });
-
-    this.menu.on('window:reload', function () {
-      BrowserWindow.getFocusedWindow().reload();
-    });
-
-    this.menu.on('window:toggle-full-screen', function () {
-      let focusedWindow = BrowserWindow.getFocusedWindow();
-      let fullScreen = true;
-      if (focusedWindow.isFullScreen()) {
-        fullScreen = false;
-      }
-
-      focusedWindow.setFullScreen(fullScreen);
-    });
-
-    this.menu.on('window:toggle-dev-tools', function () {
-      BrowserWindow.getFocusedWindow().toggleDevTools();
-    });
+    this.menu.on('application:quit', () => app.quit());
+    this.menu.on('application:report-issue', () => shell.openExternal(this.pkgJson.bugs));
+    this.menu.on('window:reload', () => this.getFocusedWindow().reload());
+    this.menu.on('window:toggle-dev-tools', () => this.getFocusedWindow().toggleDevTools());
+    this.menu.on('window:toggle-full-screen', () => this.getFocusedWindow().setFullScreen(!this.getFocusedWindow().isFullScreen()));
 
     this.menu.on('application:run-specs', () => {
-      return this.openWithOptions({
+      return this.run({
         test: true,
         exitWhenDone: false
       });
     });
 
     return applicationWindow;
+  }
+
+  getFocusedWindow() {
+    return BrowserWindow.getFocusedWindow();
   }
 
   /**
@@ -135,28 +120,17 @@ class Application extends EventEmitter {
   }
 
   handleEvents() {
-    this.on('application:quit', function () {
-      return app.quit();
-    });
+    this.on('application:quit', () => pp.quit());
 
-    ipcMain.on('context-appwindow', (event, ...args) => {
-      let applicationWindow = this.windowForEvent(event.sender);
-      applicationWindow.emit(...args);
-    });
-
-    ipcMain.on('context-generator', (event, ...args) => {
-      let applicationWindow = this.windowForEvent(event.sender);
-      applicationWindow.sendCommandToProcess(...args);
-    });
+    ipcMain.on('context-appwindow', (event, ...args) => this.windowForEvent(event.sender).emit(...args));
+    ipcMain.on('context-generator', (event, ...args) => this.windowForEvent(event.sender).sendCommandToProcess(...args));
   }
 
   // Returns the {ApplicationWindow} for the given ipc event.
   windowForEvent(sender) {
-    let win = BrowserWindow.fromWebContents(sender);
+    let window = BrowserWindow.fromWebContents(sender);
 
-    return _.find(this.windows, function (applicationWindow) {
-      return applicationWindow.window === win;
-    });
+    return _.find(this.windows, applicationWindow => applicationWindow.window === window);
   }
 
 }
