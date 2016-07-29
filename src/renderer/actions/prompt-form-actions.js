@@ -1,9 +1,5 @@
-import { ipcRenderer } from 'electron';
-import {
-  SUBMIT_FORM,
-  SELECT_FOLDER,
-  SUBMIT_SELECTED_FOLDER
-} from './action-types';
+import {ipcRenderer} from 'electron';
+import {SUBMIT_FORM, SELECT_FOLDER, SUBMIT_SELECTED_FOLDER} from './action-types';
 
 export function submitForm(generatorName, answers) {
   ipcRenderer.send('context-generator', 'generator:prompt-answer', answers);

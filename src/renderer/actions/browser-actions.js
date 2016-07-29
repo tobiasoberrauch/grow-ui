@@ -5,7 +5,6 @@ import {
   GENERATOR_DONE,
   FOLDER_SELECTED
 } from './action-types';
-
 import insight from '../utils/insight.js';
 
 export function generatorsDataReceived(generators) {

@@ -1,4 +1,4 @@
-import { Styles } from 'material-ui';
+import {Styles} from 'material-ui';
 
 // excludes problematic colors
 const stripColors = [

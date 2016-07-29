@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import {combineReducers} from 'redux';
 import generator from './generator';
 import prompt from './prompt';
 

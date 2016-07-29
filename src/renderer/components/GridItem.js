@@ -1,8 +1,8 @@
-import { sample } from 'lodash';
-import React, { PropTypes } from 'react';
+import {sample} from 'lodash';
+import React, {PropTypes} from 'react';
 import color from 'color';
-import { Paper } from 'material-ui';
-import { humanizeEventName as humanize } from 'underscore-plus';
+import {Paper} from 'material-ui';
+import {humanizeEventName as humanize} from 'underscore-plus';
 import insight from '../utils/insight.js';
 import colors from '../utils/colors';
 import styles from '../styles/components/grid-item';
@@ -33,7 +33,7 @@ export default React.createClass({
   ],
 
   _onClick: function () {
-    const { name, version, isCompatible, gridItemSelected } = this.props;
+    const {name, version, isCompatible, gridItemSelected} = this.props;
 
     const generatorName = name.replace('generator-', '');
     const actionName = `run-${generatorName}-${version}`;
@@ -73,18 +73,18 @@ export default React.createClass({
       styles.gridItem,
       Object.assign(
         {}, styles.gridItemActive,
-        { minHeight: contentHeight }
+        {minHeight: contentHeight}
       )
     );
     const gridItemImgStyle = getStyle(
       Object.assign({}, styles.img,
-        { backgroundImage: `url(img/${this.props.name}.png)` }
+        {backgroundImage: `url(img/${this.props.name}.png)`}
       ),
       styles.imgActive
     );
     const gridItemBgStyle = getStyle(
       Object.assign({}, styles.bg,
-        { backgroundColor: this.state.color }
+        {backgroundColor: this.state.color}
       ),
       styles.bgActive
     );
@@ -96,7 +96,7 @@ export default React.createClass({
     // disables visual grid items when a generator is open
     if (!this.props.enabled) {
       gridItemStyle = Object.assign({}, gridItemStyle,
-        { pointerEvents: 'none', cursor: 'default' }
+        {pointerEvents: 'none', cursor: 'default'}
       );
     }
 
@@ -107,8 +107,8 @@ export default React.createClass({
         onMouseOver={this._onMouseOver}
         onMouseOut={this._onMouseOut}
         onClick={this._onClick}>
-        <div style={gridItemBgStyle} />
-        <figure style={gridItemImgStyle} />
+        <div style={gridItemBgStyle}/>
+        <figure style={gridItemImgStyle}/>
         <h3 style={gridItemH3Style}>{generatorName}</h3>
       </Paper>
     );

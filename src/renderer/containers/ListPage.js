@@ -6,7 +6,7 @@ export default class ListPage extends React.Component {
 
 
   render() {
-    const { dispatch, generator, selectedFolder } = this.props;
+    const {dispatch, generator, selectedFolder} = this.props;
     const {} = generator;
 
     const gridActions = bindActionCreators(GridActions, dispatch);

@@ -1,5 +1,4 @@
-import { extend } from 'lodash';
-
+import {extend} from 'lodash';
 import {
   GRID_ITEM_SELECTED,
   GENERATOR_PROMPT_QUESTIONS,

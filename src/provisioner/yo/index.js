@@ -26,7 +26,7 @@ function getGenerators() {
   });
 
   list = list.map(function (item) {
-    var pkgPath = findup('package.json', { cwd: item.resolved });
+    var pkgPath = findup('package.json', {cwd: item.resolved});
     if (!pkgPath) {
       return null;
     }

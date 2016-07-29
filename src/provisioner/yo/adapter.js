@@ -1,4 +1,5 @@
-var ProcessAdapter = module.exports = function ProcessAdapter() {};
+var ProcessAdapter = module.exports = function ProcessAdapter() {
+};
 
 ProcessAdapter.prototype.prompt = function (questions, callback) {
   process.send({

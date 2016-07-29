@@ -9,7 +9,7 @@ export default {
 
   renderQuestion(question) {
     const {
-      generator: { color }
+      generator: {color}
     } = this.props;
 
     if (!question.type) {
@@ -92,7 +92,7 @@ export default {
           />
         );
       default:
-        return <span key={question.name} />;
+        return <span key={question.name}/>;
     }
   }
 };

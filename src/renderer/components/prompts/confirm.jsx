@@ -1,5 +1,5 @@
 import React from 'react';
-import { RaisedButton } from 'material-ui';
+import {RaisedButton} from 'material-ui';
 import PromptMixin from './prompt-mixin';
 import Container from '../prompt-form/container';
 import Label from '../prompt-form/label';

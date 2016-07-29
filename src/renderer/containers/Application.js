@@ -1,6 +1,5 @@
 import React from 'react';
 import Toolbar from '../components/Toolbar';
-
 import mui from 'material-ui';
 let themeManager = mui.Styles.ThemeManager;
 

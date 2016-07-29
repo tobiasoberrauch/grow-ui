@@ -1,6 +1,4 @@
-import {
-  FOLDER_SELECTED
-} from '../actions/action-types';
+import {FOLDER_SELECTED} from '../actions/action-types';
 
 const initialState = '';
 

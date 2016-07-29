@@ -8,7 +8,7 @@ export default React.createClass({
   },
   render() {
     var style = Object.assign({}, styles.label,
-      { background: this.props.color }
+      {background: this.props.color}
     );
     return (
       <label style={style}>

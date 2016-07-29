@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField } from 'material-ui';
+import {TextField} from 'material-ui';
 import PromptMixin from './prompt-mixin';
 import Container from '../prompt-form/container';
 import Label from '../prompt-form/label';

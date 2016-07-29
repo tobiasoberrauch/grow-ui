@@ -1,4 +1,5 @@
-var Insight = function () {};
+var Insight = function () {
+};
 var crypto = require('crypto');
 var querystring = require('querystring');
 var _ = require('lodash');
