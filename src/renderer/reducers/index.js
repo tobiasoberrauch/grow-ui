@@ -1,10 +1,7 @@
-import {combineReducers} from 'redux';
 import generator from './generator';
 import prompt from './prompt';
 
-const rootReducer = combineReducers({
+export default {
   generator,
   prompt
-});
-
-export default rootReducer;
+};

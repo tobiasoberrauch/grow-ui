@@ -1,6 +1,5 @@
 import React from 'react';
 import {Layout} from 'react-mdl';
-import AppContent from './AppContent';
 import AppHeader from './AppHeader';
 
 const App = React.createClass({
@@ -10,7 +9,7 @@ const App = React.createClass({
     return (
       <Layout fixedHeader style={{ backgroundColor: '#fafafa' }}>
         <AppHeader title="Flow"/>
-        <AppContent />
+        {this.props.children}
       </Layout>
     );
   }

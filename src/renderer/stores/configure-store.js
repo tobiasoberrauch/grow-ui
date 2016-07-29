@@ -1,7 +1,15 @@
-import {createStore, applyMiddleware} from 'redux';
+import {createStore, applyMiddleware, combineReducers} from 'redux';
 import thunk from 'redux-thunk';
-import rootReducer from '../reducers';
+import {routerReducer} from 'react-router-redux';
+import reducers from '../reducers';
 
 export default function configureStore(initialState) {
-  return createStore(rootReducer, initialState, applyMiddleware(thunk));
+  let rootReducers = combineReducers({
+    ...reducers,
+    routing: routerReducer
+  });
+
+  console.log('rootReducers', rootReducers);
+
+  return createStore(rootReducers, initialState, applyMiddleware(thunk));
 }

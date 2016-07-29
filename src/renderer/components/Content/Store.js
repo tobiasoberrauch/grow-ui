@@ -2,15 +2,15 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Content} from 'react-mdl';
 import {bindActionCreators} from 'redux';
-import Grid from '../components/Grid';
-import * as GridActions from '../actions/grid-actions';
+import Grid from '../Grid';
+import * as GridActions from '../../actions/grid-actions';
 
-const AppContent = React.createClass({
-  displayName: 'AppContent',
+const Store = React.createClass({
+  displayName: 'Store',
 
   render() {
     const {generators, generator, gridActions} = this.props;
-    
+
     return (
       <Content>
         <Grid
@@ -39,4 +39,4 @@ let mergeProps = function (stateProps, dispatchProps, ownProps) {
 };
 let options = {};
 
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps, options)(AppContent);
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps, options)(Store);
