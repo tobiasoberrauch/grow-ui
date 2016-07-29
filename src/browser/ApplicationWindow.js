@@ -103,7 +103,7 @@ AppWindow.prototype.initProcess = function () {
     return;
   }
 
-  this.process = fork(path.join(__dirname, '..', 'provisioner', 'dev', 'index.js'));
+  this.process = fork(path.join(__dirname, '..', 'provisioner', 'yo', 'index.js'));
 
   this.process.on('message', function (msg) {
     console.log('APP', msg);

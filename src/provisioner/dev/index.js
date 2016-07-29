@@ -17,8 +17,21 @@ function init() {
   sendCommandToAppWindow('generator:installed-generators', JSON.parse(generators));
 }
 
+function run(generatorName, cwd) {
+  if (!generatorName) {
+    return sendCommandToAppWindow('generator:error', new Error('You must provide a generator name'));
+  }
+
+  if (!fs.existsSync(cwd)) {
+    return sendCommandToAppWindow('generator:error', new Error('The given path does not exist or is not a directory'));
+  }
+
+  process.chdir(cwd);
+}
+
 let api = {
-  'generator:init': init
+  'generator:init': init,
+  'generator:run': run
 };
 
 process.on('message', function (message) {

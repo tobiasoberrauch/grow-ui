@@ -2,8 +2,8 @@ import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import path from 'path';
 import { EventEmitter } from 'events';
 import _ from 'underscore-plus';
-import AppMenu from './appmenu';
-import AppWindow from './appwindow';
+import ApplicationMenu from './ApplicationMenu';
+import ApplicationWindow from './ApplicationWindow';
 
 class Application extends EventEmitter {
 
@@ -11,17 +11,14 @@ class Application extends EventEmitter {
    * The application's class.
    *
    * It's the entry point into the application and maintains the global state of the application.
-   *
-   * @param {boolean} [options.test]          Boolean to determine if the application is running in test mode.
-   * @param {boolean} [options.exitWhenDone]  Boolean to determine whether to automatically exit.
    */
-  constructor(options = {}) {
+  constructor() {
     super();
+
     this.pkgJson = require('../../package.json');
     this.windows = [];
 
     this.handleEvents();
-    this.openWithOptions(options);
   }
 
   /**
@@ -30,24 +27,22 @@ class Application extends EventEmitter {
    * @param {boolean} [options.test]          Boolean to determine if the application is running in test mode.
    * @param {boolean} [options.exitWhenDone]  Boolean to determine whether to automatically exit.
    */
-  openWithOptions(options) {
-    let newWindow;
-    let { test } = options;
+  run(options) {
+    let window;
 
-    if (test) {
+    if (options.test) {
       if (options.exitWhenDone === undefined) {
         options.exitWhenDone = true;
       }
-      newWindow = this.openSpecsWindow(options);
+      window = this.openSpecsWindow(options);
     } else {
-      newWindow = this.openWindow(options);
+      window = this.openWindow(options);
     }
 
-    newWindow.show();
-    this.windows.push(newWindow);
-    newWindow.on('closed', () => {
-      this.removeAppWindow(newWindow);
-    });
+    window.show();
+    window.on('closed', () => this.removeApplicationWindow(window));
+
+    this.windows.push(window);
   }
 
   /**
@@ -65,7 +60,7 @@ class Application extends EventEmitter {
       bootstrapScript = require.resolve(path.resolve(__dirname, '..', '..', 'spec', 'helpers', 'bootstrap'));
     }
 
-    return new AppWindow({
+    return new ApplicationWindow({
       bootstrapScript: bootstrapScript,
       exitWhenDone: exitWhenDone,
       isSpec: true,
@@ -74,23 +69,22 @@ class Application extends EventEmitter {
   }
 
   /**
-   * Opens up a new AppWindow and runs the application.
+   * Opens up a new applicationWindow and runs the application.
    */
   openWindow() {
     let iconPath = path.resolve(__dirname, '..', '..', 'resources', 'app.png');
 
-    let appWindow;
-    appWindow = new AppWindow({
+    let applicationWindow = new ApplicationWindow({
       title: this.pkgJson.productName,
       icon: iconPath,
       width: 1024,
       height: 700,
       titleBarStyle: 'hidden-inset'
     });
-    this.menu = new AppMenu({
+    this.menu = new ApplicationMenu({
       pkg: this.pkgJson
     });
-    this.menu.attachToWindow(appWindow);
+    this.menu.attachToWindow(applicationWindow);
     this.menu.on('application:quit', function () {
       app.quit();
     });
@@ -123,17 +117,18 @@ class Application extends EventEmitter {
         exitWhenDone: false
       });
     });
-    return appWindow;
+
+    return applicationWindow;
   }
 
   /**
    * Removes the given window from the list of windows, so it can be GC'd.
    *
-   * @param {AppWindow} appWindow The AppWindow to be removed
+   * @param {ApplicationWindow} applicationWindow The ApplicationWindow to be removed
    */
-  removeAppWindow(appWindow) {
+  removeApplicationWindow(applicationWindow) {
     this.windows.forEach((win, index) => {
-      if (win === appWindow) {
+      if (win === applicationWindow) {
         this.windows.splice(index, 1);
       }
     });
@@ -145,26 +140,25 @@ class Application extends EventEmitter {
     });
 
     ipcMain.on('context-appwindow', (event, ...args) => {
-      let appWindow = this.windowForEvent(event.sender);
-      appWindow.emit(...args);
+      let applicationWindow = this.windowForEvent(event.sender);
+      applicationWindow.emit(...args);
     });
 
     ipcMain.on('context-generator', (event, ...args) => {
-      let appWindow = this.windowForEvent(event.sender);
-      appWindow.sendCommandToProcess(...args);
+      let applicationWindow = this.windowForEvent(event.sender);
+      applicationWindow.sendCommandToProcess(...args);
     });
   }
 
-  // Returns the {AppWindow} for the given ipc event.
+  // Returns the {ApplicationWindow} for the given ipc event.
   windowForEvent(sender) {
     let win = BrowserWindow.fromWebContents(sender);
-    return _.find(this.windows, function (appWindow) {
-      return appWindow.window === win;
+
+    return _.find(this.windows, function (applicationWindow) {
+      return applicationWindow.window === win;
     });
   }
 
 }
 
-export default function getApp(args) {
-  return new Application(args);
-}
+export default Application;
