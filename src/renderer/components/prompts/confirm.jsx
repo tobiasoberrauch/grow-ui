@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button} from 'react-mdl';
-import PromptMixin from './prompt-mixin';
+import PromptMixin from '../../mixins/prompt-mixin';
 import Container from '../prompt-form/container';
 import Label from '../prompt-form/label';
 import styles from '../../styles/components/prompts/confirm';

@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react';
 import {Icon, FABButton} from 'react-mdl';
 import promptFormStyles from '../../styles/components/prompt-form';
-import GetComponentStyle from '../mixins/get-component-style';
-import QuestionRenderer from './question-renderer-mixin.jsx';
+import GetComponentStyle from '../../mixins/get-component-style';
+import QuestionRenderer from '../../mixins/question-renderer-mixin';
 
 export default React.createClass({
   displayName: 'PromptForm',

@@ -3,7 +3,7 @@ import React, {PropTypes} from 'react';
 import {Card, CardMenu, CardTitle, CardActions, Button, CardText, IconButton} from 'react-mdl';
 import {humanizeEventName as humanize} from 'underscore-plus';
 import insight from '../utils/insight.js';
-import GetComponentStyle from './mixins/get-component-style';
+import GetComponentStyle from '../mixins/get-component-style';
 
 function getFormattedName(name) {
   return humanize(name.replace('generator-', ''));
