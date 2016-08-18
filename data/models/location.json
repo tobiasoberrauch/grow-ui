@@ -1,0 +1,14 @@
+{
+  "name": "Location",
+  "plural": "locations",
+  "base": "PersistedModel",
+  "properties": {
+    "id": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

@@ -1,0 +1,16 @@
+{
+  "id": "grolba.team",
+  "url": "/team",
+  "modules": {
+    "vendor.crud": {
+      "id": "issue",
+      "url": "/issue",
+      "model": "Issue"
+    },
+    "vendor.dictionary": {
+      "id": "dictionary",
+      "url": "/dictionary",
+      "model": "Word"
+    }
+  }
+}

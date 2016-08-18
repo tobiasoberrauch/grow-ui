@@ -1,7 +1,5 @@
 const electron = require('electron');
-const dialog = electron.dialog;
-const BrowserWindow = electron.BrowserWindow;
-const shell = electron.shell;
+const browserWindowState = require('electron-window-state');
 const path = require('path');
 const url = require('url');
 const EventEmitter = require('events').EventEmitter;
@@ -13,24 +11,32 @@ export default class ApplicationWindow extends EventEmitter {
   constructor(options) {
     super();
 
-    this.loadSettings = {
+    this.process = null;
+    this.loadSettings = _.extend({
       bootstrapScript: require.resolve('../../Renderer/src/main')
-    };
-    this.loadSettings = _.extend(this.loadSettings, options);
+    }, options);
 
-    let windowOptions = {
+    let windowStateManager = browserWindowState({
+      defaultWidth: 1000,
+      defaultHeight: 800
+    });
+    let windowOptions = _.extend({
+      title: 'Grow',
+      width: windowStateManager.width,
+      height: windowStateManager.height,
+      x: windowStateManager.x,
+      y: windowStateManager.y,
       webPreferences: {
         subpixelFontScaling: true,
         directWrite: true
       }
-    };
-    windowOptions = _.extend(windowOptions, this.loadSettings);
+    }, this.loadSettings);
 
-    this.window = new BrowserWindow(windowOptions);
+    this.window = new electron.BrowserWindow(windowOptions);
+    windowStateManager.manage(this.window);
+
     this.handleEvents();
-  }
 
-  show() {
     var targetPath = path.resolve(__dirname, '..', '..', '..', 'public', 'index.html');
     var targetUrl = url.format({
       protocol: 'file',
@@ -41,12 +47,33 @@ export default class ApplicationWindow extends EventEmitter {
       }
     });
     this.window.loadURL(targetUrl);
-
     this.window.webContents.on('did-finish-load', () => {
-      this.initProcess();
-    });
+      if (this.loadSettings.isSpec) {
+        return;
+      }
 
+      this.process = fork(path.join(__dirname, '..', '..', 'Provisioner', 'src', 'yo', 'index.js'));
+
+      this.process.on('message', message => {
+        this.sendCommandToBrowserWindow(message.event, message.data);
+        this.emitCommandToAppWindow(message.event, message.data);
+      });
+
+      this.sendCommandToProcess('generator:init');
+    });
+  }
+
+  show() {
     this.window.show();
+    this.window.focus();
+  }
+
+  hide() {
+    this.window.hide();
+  }
+
+  isVisible() {
+    return this.window.isVisible();
   }
 
   reload() {
@@ -80,7 +107,7 @@ export default class ApplicationWindow extends EventEmitter {
       properties: ['openDirectory', 'createDirectory']
     };
 
-    dialog.showOpenDialog(this.window, options, fileNames => {
+    electron.dialog.showOpenDialog(this.window, options, fileNames => {
       if (!fileNames) {
         return;
       }
@@ -93,25 +120,7 @@ export default class ApplicationWindow extends EventEmitter {
       return;
     }
 
-    shell.showItemInFolder(cwd);
-  }
-
-  initProcess() {
-    if (this.loadSettings.isSpec) {
-      return;
-    }
-
-    this.process = fork(path.join(__dirname, '..', '..', 'Provisioner', 'src', 'yo', 'index.js'));
-
-    this.process.on('message', (message) => {
-      console.log('APP', message);
-
-      this.sendCommandToBrowserWindow(message.event, message.data);
-      this.emitCommandToAppWindow(message.event, message.data);
-
-    });
-
-    this.sendCommandToProcess('generator:init');
+    electron.shell.showItemInFolder(cwd);
   }
 
   killProcess() {

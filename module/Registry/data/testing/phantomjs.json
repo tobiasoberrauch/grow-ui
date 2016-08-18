@@ -1,0 +1,12 @@
+
+{
+  "apt-get": "wget libfontconfig1 libfreetype6",
+  "env": {
+    "PHANTOMJS_VERSION": "",
+    "PHANTOMJS_DIR": ""
+  },
+  "run": [
+    "RUN wget -q --continue -P $PHANTOMJS_DIR 'https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-${PHANTOMJS_VERSION}-linux-x86_64.tar.bz2'",
+    "RUN tar -xaf $PHANTOMJS_DIR/phantomjs* --strip-components=1 --directory '$PHANTOMJS_DIR'"
+  ]
+}

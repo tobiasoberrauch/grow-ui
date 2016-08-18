@@ -1,9 +1,13 @@
-import {app, BrowserWindow, ipcMain, shell} from 'electron';
+import electron from 'electron';
+const {systemPreferences} = require('electron'); // http://electron.atom.io/docs/api/system-preferences/
 import path from 'path';
 import {EventEmitter} from 'events';
 import _ from 'underscore-plus';
 import ApplicationMenu from './ApplicationMenu';
 import ApplicationWindow from './ApplicationWindow';
+import GithubReleases from 'electron-gh-releases';
+import Positioner from 'electron-positioner';
+const url = require('url');
 
 class Application extends EventEmitter {
 
@@ -17,6 +21,25 @@ class Application extends EventEmitter {
 
     this.pkgJson = require('../../../package.json');
     this.windows = [];
+    this.appIcon = null;
+
+    electron.powerMonitor.on('suspend', () => {
+      console.log('The system is going to sleep');
+    });
+    electron.powerMonitor.on('resume', () => {
+      console.log('The system is back');
+    });
+    //electron.app.getPath('home');
+    //electron.app.getVersion('home');
+    //electron.app.addRecentDocument('home');
+    //electron.app.clearRecentDocuments('home');
+    //electron.app.setAsDefaultProtocolClient('grow');
+    //electron.app.isDefaultProtocolClient('grow');
+    //electron.app.dock.bounce('critical');
+//electron.app.dock.downloadFinished(filePath);
+    electron.app.dock.setBadge('text');
+    electron.app.dock.setMenu(electron.Menu.buildFromTemplate([{label: 'foo'}]));
+    //electron.app.dock.setIcon(image);
 
     this.handleEvents();
   }
@@ -34,12 +57,12 @@ class Application extends EventEmitter {
       if (options.exitWhenDone === undefined) {
         options.exitWhenDone = true;
       }
-      window = this.openSpecsWindow(options);
+      window = this.createSpecsWindow(options);
     } else {
-      window = this.openWindow(options);
+      window = this.createWindow(options);
     }
 
-    window.show();
+    //window.show();
     window.on('closed', () => this.removeApplicationWindow(window));
 
     this.windows.push(window);
@@ -50,7 +73,7 @@ class Application extends EventEmitter {
    *
    * @param {boolean} [options.exitWhenDone] Boolean to determine whether to automatically exit.
    */
-  openSpecsWindow(options) {
+  createSpecsWindow(options) {
     let bootstrapScript;
     let exitWhenDone = options.exitWhenDone;
 
@@ -73,45 +96,173 @@ class Application extends EventEmitter {
   /**
    * Opens up a new applicationWindow and runs the application.
    */
-  openWindow() {
-    let iconPath = path.resolve(__dirname, '..', '..', '..', 'data', 'resources', 'app.png');
+  createWindow() {
+    let iconPath = path.resolve(__dirname, '..', '..', '..', 'public', 'img', 'favicon.png');
 
-    let applicationWindow = new ApplicationWindow({
-      title: this.pkgJson.productName,
-      icon: iconPath,
-      width: 1024,
-      height: 700,
-      titleBarStyle: 'hidden-inset'
+    let appIcon = new electron.Tray(iconPath);
+    appIcon.setToolTip('');
+    appIcon.setPressedImage(iconPath);
+    appIcon.window = new ApplicationWindow({
+      //show: false
     });
-    this.menu = new ApplicationMenu({
+
+
+    electron.globalShortcut.register('CommandOrControl+Shift+X', () => {
+      appIcon.window.isVisible() ? appIcon.window.hide() : appIcon.window.show();
+    });
+
+    appIcon.window.toggleDevTools();
+    appIcon.positioner = new Positioner(appIcon.window);
+
+    appIcon.on('click', () => {
+      appIcon.window.isVisible() ? appIcon.window.hide() : appIcon.window.show();
+    });
+    appIcon.on('right-click', () => {
+      electron.dialog.showMessageBox({
+        type: 'question',
+        buttons: ['asd']
+      });
+//electron.dialog.showSaveDialog({});
+      //electron.dialog.showOpenDialog(appIcon.window, {
+      //  title: 'title',
+      //  defaultPath: '~',
+      //  properties: [
+      //    'openFile',
+      //    'openDirectory',
+      //    'multiSelections'
+      //  ],
+      //  filters: [
+      //    {name: 'Images', extensions: ['jpg', 'png', 'gif']},
+      //    {name: 'Movies', extensions: ['mkv', 'avi', 'mp4']},
+      //    {name: 'Custom File Type', extensions: ['as']},
+      //    {name: 'All Files', extensions: ['*']}
+      //  ]
+      //});
+    });
+    appIcon.on('drop-files', () => {
+
+    });
+
+    appIcon.window.on('blur', this.hideWindow);
+    appIcon.window.on('show', () => {
+      appIcon.setHighlightMode('always')
+    });
+    appIcon.window.on('hide', () => {
+      appIcon.setHighlightMode('never')
+    });
+
+
+    this.menu = this.createMenu();
+    this.menu.attachToWindow(appIcon.window);
+    //this.updater = this.createUpdater();
+
+    return appIcon.window;
+  }
+
+  showWindow() {
+    this.appIcon.window.show();
+  }
+
+  hideWindow() {
+    if (this.appIcon && this.appIcon.window) {
+      this.appIcon.window.hide();
+    }
+  }
+
+  /**
+   *
+   * @returns {ApplicationMenu}
+   * */
+  createMenu() {
+    let menu = new ApplicationMenu({
       pkg: this.pkgJson
     });
-    this.menu.attachToWindow(applicationWindow);
-    this.menu.on('application:quit', () => app.quit());
-    this.menu.on('application:report-issue', () => shell.openExternal(this.pkgJson.bugs));
-    this.menu.on('window:reload', () => this.getFocusedWindow().reload());
-    this.menu.on('window:toggle-dev-tools', () => this.getFocusedWindow().toggleDevTools());
-    this.menu.on('window:toggle-full-screen', () => this.getFocusedWindow().setFullScreen(!this.getFocusedWindow().isFullScreen()));
 
-    this.menu.on('application:run-specs', () => {
+    menu.on('application:quit', electron.app.quit);
+    menu.on('application:report-issue', () => electron.shell.openExternal(this.pkgJson.bugs));
+    //menu.on('window:reload', electron.BrowserWindow.getFocusedWindow().reload);
+    //menu.on('window:toggle-dev-tools', this.getFocusedWindow().toggleDevTools);
+    //menu.on('window:toggle-full-screen', () => this.getFocusedWindow().setFullScreen(!this.getFocusedWindow().isFullScreen()));
+    menu.on('application:run-specs', () => {
       return this.run({
         test: true,
         exitWhenDone: false
       });
     });
 
-    return applicationWindow;
+    return menu;
+  }
+
+  createAppIcon() {
+    let iconPath = path.resolve(__dirname, '..', '..', '..', 'data', 'resources', 'app.png');
+    var iconIdle = path.join(__dirname, '..', '..', '..', 'data', 'resources', 'app.png');
+
+    let appIcon = new electron.Tray(iconIdle);
+    appIcon.applicationWindow = new ApplicationWindow({
+      icon: iconPath,
+      titleBarStyle: 'hidden-inset'
+    });
+    appIcon.positioner = new Positioner(appIcon.applicationWindow);
+    appIcon.on('click', (event, bounds) => {
+      console.log('click', arguments);
+      appIcon.applicationWindow.hide();
+    });
+    appIcon.setToolTip('GitHub Notifications on your menu bar.');
+
+    return appIcon;
+  }
+
+  createUpdater(showAlert) {
+    const updater = new GithubReleases({
+      repo: 'tobiasoberrauch/grow',
+      currentVersion: electron.app.getVersion()
+    });
+
+    updater.on('error', (event, message) => {
+      console.log('ERRORED.');
+      console.log('Event: ' + JSON.stringify(event) + '. MESSAGE: ' + message);
+    });
+
+    updater.on('update-downloaded', () => {
+      electron.dialog.showMessageBox({
+        type: 'question',
+        buttons: ['Update & Restart', 'Cancel'],
+        title: 'Update Available',
+        cancelId: 99,
+        message: 'There is an update available. Would you like to update FlowManager now?'
+      }, function (response) {
+        console.log('Exit: ' + response);
+        electron.app.dock.hide();
+
+        if (response === 0) {
+          updater.install();
+        }
+      });
+    });
+
+    updater.check((err, status) => {
+      if (err || !status) {
+        if (showAlert) {
+          electron.dialog.showMessageBox({
+            type: 'info',
+            buttons: ['Close'],
+            title: 'No update available',
+            message: 'You are currently running the latest version of FlowManager.'
+          });
+        }
+        electron.app.dock.hide();
+      }
+
+      if (!err && status) {
+        updater.download();
+      }
+    });
   }
 
   getFocusedWindow() {
-    return BrowserWindow.getFocusedWindow();
+    return electron.BrowserWindow.getFocusedWindow();
   }
 
-  /**
-   * Removes the given window from the list of windows, so it can be GC'd.
-   *
-   * @param {ApplicationWindow} applicationWindow The ApplicationWindow to be removed
-   */
   removeApplicationWindow(applicationWindow) {
     this.windows.forEach((win, index) => {
       if (win === applicationWindow) {
@@ -121,15 +272,21 @@ class Application extends EventEmitter {
   }
 
   handleEvents() {
-    this.on('application:quit', () => pp.quit());
+    this.on('application:quit', electron.app.quit);
 
-    ipcMain.on('context-appwindow', (event, ...args) => this.windowForEvent(event.sender).emit(...args));
-    ipcMain.on('context-generator', (event, ...args) => this.windowForEvent(event.sender).sendCommandToProcess(...args));
+    electron.ipcMain.on('context-appwindow', (event, ...args) => this.windowForEvent(event.sender).emit(...args));
+    electron.ipcMain.on('context-generator', (event, ...args) => this.windowForEvent(event.sender).sendCommandToProcess(...args));
+    electron.ipcMain.on('update-icon', (event, arg) => {
+      if (arg === 'TrayActive') {
+        //this.appIcon.setImage(iconActive);
+      } else {
+        //this.appIcon.setImage(iconIdle);
+      }
+    });
   }
 
-  // Returns the {ApplicationWindow} for the given ipc event.
   windowForEvent(sender) {
-    let window = BrowserWindow.fromWebContents(sender);
+    let window = electron.BrowserWindow.fromWebContents(sender);
 
     return _.find(this.windows, applicationWindow => applicationWindow.window === window);
   }

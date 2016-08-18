@@ -15,7 +15,6 @@ export default class ApplicationMenu extends EventEmitter {
   }
 
   attachToWindow() {
-    console.log('template', this.template);
     this.menu = Menu.buildFromTemplate(_.deepClone(this.template));
     Menu.setApplicationMenu(this.menu);
   }

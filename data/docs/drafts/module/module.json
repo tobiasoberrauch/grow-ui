@@ -1,0 +1,24 @@
+{
+  "id": "grolba.issue",
+  "base": "skeleton.crud",
+  "url": "/issue",
+  "model": {
+    "name": "Issue",
+    "plural": "issues",
+    "base": "PersistedModel",
+    "properties": {
+      "summary": {
+        "type": "string",
+        "description": "Zusammenfassung"
+      },
+      "description": {
+        "type": "string",
+        "description": "Beschreibung"
+      },
+      "active": {
+        "type": "boolean",
+        "description": "Aktiviert"
+      }
+    }
+  }
+}

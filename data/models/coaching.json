@@ -1,0 +1,50 @@
+{
+  "name": "Coaching",
+  "plural": "coachings",
+  "base": "PersistedModel",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "price": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "preferredTime": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "coach": {
+      "type": "hasOne",
+      "model": "Coach",
+      "foreignKey": "coachingId"
+    },
+    "location": {
+      "type": "hasOne",
+      "model": "Location",
+      "foreignKey": "coachingId"
+    },
+    "games": {
+      "type": "hasMany",
+      "model": "Game",
+      "foreignKey": "coachId"
+    }
+  },
+  "acls": [
+    {
+      "permission": "ALLOW",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "property": "myMethod"
+    }
+  ],
+  "methods": []
+}

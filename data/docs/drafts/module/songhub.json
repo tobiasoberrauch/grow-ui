@@ -1,0 +1,15 @@
+{
+  name: "Songhub",
+  url: "songhub",
+  base: "Github",
+  entities: {
+    team: {
+      name: "band",
+      plural: "bands"
+    },
+    entity: {
+      name: "song",
+      plural: "songs"
+    }
+  }
+}

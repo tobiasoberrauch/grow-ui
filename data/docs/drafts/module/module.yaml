@@ -1,0 +1,10 @@
+id: grolba.issue
+base: skeleton.crud
+model:
+  plural: issues
+  properties:
+    summary: Zusammenfassung
+    description: Beschreibung
+    active:
+      type: boolean
+      description: Aktiviert

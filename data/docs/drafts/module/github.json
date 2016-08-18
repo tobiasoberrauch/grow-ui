@@ -1,0 +1,33 @@
+{
+  name: "Github",
+  entities: {
+    team: {
+      name: "organisation",
+      plural: "organisations",
+      properties: {},
+      validations: [],
+      relations: {},
+      acls: [],
+      methods: []
+    },
+    entity: {
+      name: "repository",
+      plural: "repositories",
+      properties: {},
+      validations: [],
+      relations: {},
+      acls: [],
+      methods: []
+    }
+  },
+  states: {
+    index: {
+      view: "index",
+      controller: "IndexController"
+    },
+    show: {
+      view: "show",
+      controller: "ShowController"
+    }
+  }
+}

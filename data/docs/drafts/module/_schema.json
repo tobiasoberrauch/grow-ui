@@ -1,0 +1,62 @@
+{
+  name: {
+    type: "string"
+  },
+  entities: {
+    type: "object",
+    properties: {
+      team: {
+        type: "object",
+        properties: {
+          name: {
+            "type": "string"
+          },
+          plural: {
+            "type": "string"
+          },
+          properties: {
+            "type": "object"
+          },
+          validations: {
+            "type": "array"
+          },
+          relations: {
+            "type": "object"
+          },
+          acls: {
+            "type": "object"
+          },
+          methods: {
+            "type": "object"
+          }
+        }
+      },
+      entity: {
+        type: "object",
+        properties: {
+          name: {
+            "type": "string"
+          },
+          plural: {
+            "type": "string"
+          },
+          properties: {
+            "type": "object"
+          },
+          validations: {
+            "type": "array"
+          },
+          relations: {
+            "type": "object"
+          },
+          acls: {
+            "type": "object"
+          },
+          methods: {
+            "type": "object"
+          }
+        }
+      }
+    }
+  }
+}

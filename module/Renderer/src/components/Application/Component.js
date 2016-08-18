@@ -2,7 +2,7 @@ import React from 'react';
 import {Layout} from 'react-mdl';
 import ApplicationHeader from './ApplicationHeader';
 
-const App = React.createClass({
+const Application = React.createClass({
   displayName: 'Application',
 
   render() {
@@ -15,4 +15,14 @@ const App = React.createClass({
   }
 });
 
-export default App;
+export default Application;
+
+//export default Relay.createContainer(Application, {
+//    fragments: {
+//        viewer: () => Relay.QL`
+//            fragment on Node {
+//                id,
+//            }
+//        `;
+//    }
+//});

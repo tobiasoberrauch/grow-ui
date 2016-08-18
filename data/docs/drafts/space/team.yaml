@@ -1,0 +1,5 @@
+id: grolba.team
+url: /team
+modules:
+  vendor.crud: Issue
+  vendor.dictionary: Word
