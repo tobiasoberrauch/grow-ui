@@ -1,5 +1,5 @@
 import createComponent from '../../helpers/createComponent.js';
-import ExpandPrompt from '../../../src/renderer/components/prompts/expand.jsx';
+import ExpandPrompt from '../../../src/renderer/Component/prompts/expand.jsx';
 
 describe('ExpandPrompt', function () {
   let tree;

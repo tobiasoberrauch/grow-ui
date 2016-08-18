@@ -1,0 +1,581 @@
+[
+    {
+        "id": "42",
+        "active": true,
+        "url": "cron/feed/createFs",
+        "label": "Feed generieren FS",
+        "description": "Der Feed für First Stars wird zyklisch generiert. Bei Abruf wird der bereits erzeugt Feed dann ausgeliefert.",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:00:07.091713",
+        "lastexecution": "2016-08-18 00:59:12.314933",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "min": "59",
+                "hour": "0,1,2,3,4,5,6,7,8,9,11,12,13,14,15,16,17,18,19,20,23",
+                "day": "*",
+                "month": "*",
+                "weekday": "*"
+            }
+        ]
+    },
+    {
+        "id": "40",
+        "active": true,
+        "url": "cron/feed/createFf",
+        "label": "Feed generieren FF",
+        "description": "Der Feed für Fact Finder wird zyklisch generiert. Bei Abruf wird der bereits erzeugt Feed dann ausgeliefert.",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:01:15.678159",
+        "lastexecution": "2016-08-18 00:53:04.652723",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "min": "53",
+                "hour": "0,1,2,3,4,5,6,7,8,9,11,12,13,14,15,16,17,18,19,20,23",
+                "day": "*",
+                "month": "*",
+                "weekday": "*"
+            }
+        ]
+    },
+    {
+        "id": "39",
+        "active": true,
+        "url": "api/inbox/rework?limit=80",
+        "label": "Mailbox - Inbox Rework",
+        "description": "Überarbeitet Mails in der Inbox, um neue Verknüpfungen herzustellen und weitere laufende Optimierungen vorzunehmen",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:06:19.98719",
+        "lastexecution": "2016-08-18 00:43:05.53902",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "min": "23,43",
+                "hour": "*",
+                "day": "*",
+                "month": "*",
+                "weekday": "*"
+            }
+        ]
+    },
+    {
+        "id": "38",
+        "active": true,
+        "url": "api/outbox/rework?limit=80",
+        "label": "Mailbox - Outbox Rework",
+        "description": "Überarbeitet Mails in der Outbox, um neue Verknüpfungen herzustellen und weitere laufende Optimierungen vorzunehmen",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:00:06.180873",
+        "lastexecution": "2016-08-18 00:59:06.130802",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "min": "59",
+                "hour": "*",
+                "day": "*",
+                "month": "*",
+                "weekday": "*"
+            }
+        ]
+    },
+    {
+        "id": "37",
+        "active": true,
+        "url": "api/inbox-transfer",
+        "label": "Mailbox - Inbox Mail Transfer",
+        "description": "Abholen der Mails vom Mailserver.",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:00:00.286656",
+        "lastexecution": "2016-08-18 01:00:50.453854",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "min": "*/10",
+                "hour": "*",
+                "day": "*",
+                "month": "*",
+                "weekday": "*"
+            }
+        ]
+    },
+    {
+        "id": "36",
+        "active": true,
+        "url": "cron/create/saleSort",
+        "label": "Sale Sortierung",
+        "description": "Neu Erzeugen der Sale Sortierung",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:00:02.372995",
+        "lastexecution": "2016-08-17 02:29:06.418799",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "min": "29",
+                "hour": "2",
+                "day": "*",
+                "month": "*",
+                "weekday": "*"
+            }
+        ]
+    },
+    {
+        "id": "35",
+        "active": true,
+        "url": "cron/lisa/create/retrieval",
+        "label": "LISA Auftrage erstellen",
+        "description": "Für die aktuellen LISA-Reservierungen wird pro Marke ein Auslagerungsauftrag erzeugt.",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:00:00.290482",
+        "lastexecution": "2016-08-17 16:59:05.384809",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "min": "59",
+                "hour": "16",
+                "day": "*",
+                "month": "*",
+                "weekday": "*"
+            }
+        ]
+    },
+    {
+        "id": "34",
+        "active": true,
+        "url": "cron/sales/statistic",
+        "label": "Versand Abverkaufstatistik",
+        "description": "Die Abverkaufstatistik wird dann die unter Mailingtemplate definierten Empfänger gesendet",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:01:10.573349",
+        "lastexecution": "2016-08-15 10:45:11.053726",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "min": "59",
+                "hour": "7",
+                "day": "*",
+                "month": "*",
+                "weekday": "1"
+            }
+        ]
+    },
+    {
+        "id": "32",
+        "active": true,
+        "url": "cron/newsletter/update/trackingHash?listkey=36b94de508",
+        "label": "Update Mailchimp Empfänger - Tracking Hash hinzufügen (Someday - DE)",
+        "description": null,
+        "isrunning": 1,
+        "lastcallsuccessful": 0,
+        "laststatuscode": "999",
+        "lastruntime": null,
+        "lastexecution": "2016-06-04 00:02:30.407137",
+        "invalidtrials": "478",
+        "schedule": [
+            {
+                "min": "2",
+                "hour": "0-5",
+                "day": "*",
+                "month": "*",
+                "weekday": "*"
+            }
+        ]
+    },
+    {
+        "id": "28",
+        "active": false,
+        "url": "cron/imageReceiver/resizeExisting/alXjyfIPvlkM",
+        "label": "Update CDN - erzeuge quadratische Bilder",
+        "description": "Quadratische Bilder erzeugen für alle vorhandenen Artikelbilder erzeugen. Dieser cron kann deaktiviert werden, sobald er alle bereits vorhandenen Bilder abgearbeitet hat.\n\nTicket: BCOS-1113, BCOS-1112",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:00:00.273452",
+        "lastexecution": "2016-06-02 07:40:12.140681",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "min": "*/20",
+                "hour": "0,1,2,3,4,5,6,7,18,19,23",
+                "day": "*",
+                "month": "*",
+                "weekday": "*"
+            }
+        ]
+    },
+    {
+        "id": "26",
+        "active": true,
+        "url": "cron/whitelist/process",
+        "label": "Auto-Whitelisting",
+        "description": "Kunden werden anhand von Buchhaltungsdaten auf die Whitelist gesetzt, bzw. wieder entfernt",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:00:05.430376",
+        "lastexecution": "2016-08-17 13:53:07.11246",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "min": "29",
+                "hour": "3",
+                "day": "*",
+                "month": "*",
+                "weekday": "1-6"
+            },
+            {
+                "min": "53",
+                "hour": "13",
+                "day": "*",
+                "month": "*",
+                "weekday": "1-6"
+            }
+        ]
+    },
+    {
+        "id": "25",
+        "active": true,
+        "url": "cron/accounting/process",
+        "label": "Zahlungseingänge verarbeiten",
+        "description": "Für die Bestimmung der offenen Posten werden die aus der Buchhaltung gemeldeten Zahlungseingänge verarbeitet",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:00:00.751503",
+        "lastexecution": "2016-08-17 22:23:07.041064",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "min": "23",
+                "hour": "8-22",
+                "day": "*",
+                "month": "*",
+                "weekday": "1-6"
+            }
+        ]
+    },
+    {
+        "id": "23",
+        "active": true,
+        "url": "cron/cart/delete/outdated",
+        "label": "Alte Warenkörbe löschen",
+        "description": "Artikel welche vor mehr als 13 Tagen in den Warenkorb gelegt wurden werden gelöscht.",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:00:00.356878",
+        "lastexecution": "2016-08-17 04:37:05.752979",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "min": "37",
+                "hour": "4",
+                "day": "*",
+                "month": "*",
+                "weekday": "*"
+            }
+        ]
+    },
+    {
+        "id": "17",
+        "active": true,
+        "url": "cron/create/topseller2overview",
+        "label": "Topseller berechnen",
+        "description": "Die Topseller für OPUS und Someday werden aufgrund der Verkäufe der letzten 24 Stunden neu berechnet",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:00:00.269688",
+        "lastexecution": "2016-08-18 01:00:50.182659",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "min": "*/10",
+                "hour": "*",
+                "day": "*",
+                "month": "*",
+                "weekday": "*"
+            }
+        ]
+    },
+    {
+        "id": "16",
+        "active": true,
+        "url": "cron/reservation/dissolve",
+        "label": "Warenkorbreservierungen auflösen",
+        "description": "Alte Reservierungen von nicht mehr aktiven Usern auflösen",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:00:00.260503",
+        "lastexecution": "2016-08-18 01:02:04.329875",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "min": "*",
+                "hour": "*",
+                "day": "*",
+                "month": "*",
+                "weekday": "*"
+            }
+        ]
+    },
+    {
+        "id": "15",
+        "active": true,
+        "url": "cron/report/visitorAnalyticsArchivist",
+        "label": "Besucherstatistik archivieren",
+        "description": "Alle Einträge der Besucherstatistik, welche älter als 2 Tage sind werden archiviert",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:00:01.004931",
+        "lastexecution": "2016-08-18 00:02:39.944174",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "min": "2",
+                "hour": "0",
+                "day": "*",
+                "month": "*",
+                "weekday": "*"
+            }
+        ]
+    },
+    {
+        "id": "14",
+        "active": true,
+        "url": "cron/report/visitorCounter",
+        "label": "Besucheranzahl archivieren",
+        "description": "Die Anzahl der Vortagsbesucher wird archiviert",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:00:35.654471",
+        "lastexecution": "2016-08-18 00:02:04.28467",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "min": "2",
+                "hour": "0",
+                "day": "*",
+                "month": "*",
+                "weekday": "*"
+            }
+        ]
+    },
+    {
+        "id": "13",
+        "active": true,
+        "url": "cron/paymentconfirmation",
+        "label": "Bestätigungsmail Zahlungseingang versenden",
+        "description": "Zahlungseingang per E-Mail bestätigen",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:00:00.977087",
+        "lastexecution": "2016-08-17 17:53:05.553424",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "min": "19,53",
+                "hour": "8-17",
+                "day": "*",
+                "month": "*",
+                "weekday": "1-5"
+            }
+        ]
+    },
+    {
+        "id": "11",
+        "active": true,
+        "url": "cron/return/sendConfirmationMail",
+        "label": "Versand Retoureneingangsbestätigung",
+        "description": "Retoureneingangsbestätigungen werden per E-Mail an Kunden versendet",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:00:00.386442",
+        "lastexecution": "2016-08-17 16:40:15.189114",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "min": "*/20",
+                "hour": "9-16",
+                "day": "*",
+                "month": "*",
+                "weekday": "1-6"
+            }
+        ]
+    },
+    {
+        "id": "10",
+        "active": true,
+        "url": "import/product",
+        "label": "Import der Artikelstammdaten",
+        "description": "Artikelstammdaten aus dem Logi importieren. Artikelstammdaten sind Artikel Name und Beschreibung, Pflegehinweise, Hauptkeyword und Material.",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:00:01.000995",
+        "lastexecution": "2016-08-18 00:27:04.326169",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "day": "*",
+                "min": "27",
+                "hour": "*",
+                "month": "*",
+                "weekday": "*"
+            }
+        ]
+    },
+    {
+        "id": "6",
+        "active": true,
+        "url": "cron/refund/send",
+        "label": "Erstattungen übermitteln",
+        "description": "Erstattungen an Novalnet übermitteln",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:03:59.301715",
+        "lastexecution": "2016-08-17 17:10:09.490905",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "min": "10",
+                "hour": "8-17",
+                "day": "*",
+                "month": "*",
+                "weekday": "1-6"
+            }
+        ]
+    },
+    {
+        "id": "5",
+        "active": true,
+        "url": "cron/refund/create",
+        "label": "Erstattungen erstellen",
+        "description": "Erstattungen für Retouren und abgebrochene und stornierte Aufträge erstellen",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:00:02.923583",
+        "lastexecution": "2016-08-17 16:50:10.832028",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "min": "*/10",
+                "hour": "8-16",
+                "day": "*",
+                "month": "*",
+                "weekday": "1-6"
+            }
+        ]
+    },
+    {
+        "id": "4",
+        "active": true,
+        "url": "cron/create/article2overview",
+        "label": "Artikel zu Kategorien",
+        "description": "Die Artikel den Kategorieübersichtseiten zuordnen",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:00:38.600906",
+        "lastexecution": "2016-08-18 01:00:11.289969",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "day": "*",
+                "min": "*/7",
+                "hour": "*",
+                "month": "*",
+                "weekday": "*"
+            }
+        ]
+    },
+    {
+        "id": "3",
+        "active": true,
+        "url": "cron/create/routing",
+        "label": "Routings erstellen",
+        "description": "Für alle möglichen Controller die Routings erstellen",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:00:00.815018",
+        "lastexecution": "2016-08-18 01:00:10.473363",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "day": "*",
+                "min": "*/7",
+                "hour": "*",
+                "month": "*",
+                "weekday": "*"
+            }
+        ]
+    },
+    {
+        "id": "2",
+        "active": true,
+        "url": "logi/import",
+        "label": "Import aus dem Logi",
+        "description": "Verschiedene Import aus dem Logi (Auftragsstatus, Accounting, Mahnungen)",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:00:02.914428",
+        "lastexecution": "2016-08-18 01:02:01.412551",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "min": "*",
+                "hour": "*",
+                "day": "*",
+                "month": "*",
+                "weekday": "*"
+            }
+        ]
+    },
+    {
+        "id": "1",
+        "active": true,
+        "url": "import/stock",
+        "label": "Bestandsaktualisierung",
+        "description": "Aktuelle Bestände werden aus dem Logi abgeholt",
+        "isrunning": 0,
+        "lastcallsuccessful": 1,
+        "laststatuscode": "200",
+        "lastruntime": "00:00:04.653456",
+        "lastexecution": "2016-08-18 01:00:02.982292",
+        "invalidtrials": "0",
+        "schedule": [
+            {
+                "day": "*",
+                "min": "*/5",
+                "hour": "*",
+                "month": "*",
+                "weekday": "*"
+            }
+        ]
+    }
+]

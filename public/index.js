@@ -1,12 +1,7 @@
 'use strict';
 
-// Warning: You almost certainly do *not* want to edit this code - instead, you
-// want to edit src/renderer/main.js instead
-window.onload = function() {
+window.onload = function () {
   try {
-    var startTime = Date.now();
-
-    // Skip "?loadSettings=".
     var loadSettings = JSON.parse(decodeURIComponent(window.location.search.substr(14)));
 
     require('vm-compatibility-layer');
@@ -15,8 +10,7 @@ window.onload = function() {
 
     require(loadSettings.bootstrapScript);
     require('electron').ipcRenderer.send('window-command', 'window:loaded');
-  }
-  catch (error) {
+  } catch (error) {
     var currentWindow = require('electron').remote.getCurrentWindow();
     currentWindow.setSize(800, 600);
     currentWindow.center();

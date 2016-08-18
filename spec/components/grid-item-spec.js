@@ -1,5 +1,5 @@
 import createComponent from '../helpers/createComponent.js';
-import GridItem from '../../src/renderer/components/grid-item.jsx';
+import GridItem from '../../src/renderer/Component/grid-item.jsx';
 import generatorsList from '../fixtures/generators-list.js';
 
 function mockContent() {

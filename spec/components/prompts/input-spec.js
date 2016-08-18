@@ -1,5 +1,5 @@
 import createComponent from '../../helpers/createComponent.js';
-import InputPrompt from '../../../src/renderer/components/prompts/input.jsx';
+import InputPrompt from '../../../src/renderer/Component/prompts/input.jsx';
 
 describe('InputPrompt', function () {
   let tree;

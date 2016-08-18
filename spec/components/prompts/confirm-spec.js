@@ -1,5 +1,5 @@
 import createComponent from '../../helpers/createComponent.js';
-import ConfirmPrompt from '../../../src/renderer/components/prompts/confirm.jsx';
+import ConfirmPrompt from '../../../src/renderer/Component/prompts/confirm.jsx';
 import styles from '../../../src/renderer/styles/components/prompts/confirm';
 
 describe('ConfirmPrompt', function () {

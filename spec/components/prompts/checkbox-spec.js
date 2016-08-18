@@ -1,5 +1,5 @@
 import createComponent from '../../helpers/createComponent.js';
-import CheckboxPrompt from '../../../src/renderer/components/prompts/checkbox.jsx';
+import CheckboxPrompt from '../../../src/renderer/Component/prompts/checkbox.jsx';
 
 describe('CheckboxPrompt', function () {
   let tree;

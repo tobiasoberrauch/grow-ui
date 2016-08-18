@@ -1,10 +1,10 @@
 import React from 'react';
 import App from './containers/App';
-import NoMatch from './components/Content/NoMatch';
-import Dashboard from './components/Content/Dashboard';
-import Store from './components/Content/Store';
-import Components from './components/Content/Components';
-import Networks from './components/Content/Networks';
+import NoMatch from './Component/Content/NoMatch';
+import Dashboard from './Component/Dashboard/Component';
+import Store from './Component/Content/Store';
+import Components from './Component/Content/Components';
+import Networks from './Component/Content/Networks';
 import {IndexRoute, Route} from 'react-router';
 
 export default (
@@ -16,29 +16,3 @@ export default (
     <Route path="*" component={NoMatch}/>
   </Route>
 );
-//
-//export default {
-//  name: 'app',
-//  path: '/',
-//  component: App,
-//  indexRouter: {
-//    name: 'dashboard',
-//    component: Dashboard
-//  },
-//  childRoutes: [{
-//    name: 'components',
-//    path: '/components',
-//    component: Components
-//  }, {
-//    name: 'networks',
-//    path: '/networks',
-//    component: Networks
-//  }, {
-//    name: 'store',
-//    path: '/store',
-//    component: Store
-//  }, {
-//    path: '/*',
-//    component: NoMatch
-//  }]
-//};

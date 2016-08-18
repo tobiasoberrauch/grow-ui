@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 
 import createComponent from '../helpers/createComponent.js';
-import Grid from '../../src/renderer/components/grid.jsx';
+import Grid from '../../src/renderer/Component/grid.jsx';
 import generatorsList from '../fixtures/generators-list.js';
 
 describe('Grid', function () {

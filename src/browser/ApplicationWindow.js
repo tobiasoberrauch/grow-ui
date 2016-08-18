@@ -31,7 +31,7 @@ export default class ApplicationWindow extends EventEmitter {
   }
 
   show() {
-    var targetPath = path.resolve(__dirname, '..', '..', 'static', 'index.html');
+    var targetPath = path.resolve(__dirname, '..', '..', 'public', 'index.html');
     var targetUrl = url.format({
       protocol: 'file',
       pathname: targetPath,

@@ -1,5 +1,5 @@
 import createComponent from '../../helpers/createComponent.js';
-import FolderPrompt from '../../../src/renderer/components/prompts/folder.jsx';
+import FolderPrompt from '../../../src/renderer/Component/prompts/folder.jsx';
 
 describe('FolderPrompt', function () {
   let tree;
