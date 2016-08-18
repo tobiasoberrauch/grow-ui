@@ -1,14 +1,14 @@
 import React from 'react';
-import App from './containers/App';
-import NoMatch from './Component/Content/NoMatch';
-import Dashboard from './Component/Dashboard/Component';
-import Store from './Component/Content/Store';
-import Components from './Component/Content/Components';
-import Networks from './Component/Content/Networks';
+import Application from './components/Application/Component';
+import NoMatch from './components/Content/NoMatch';
+import Dashboard from './components/Dashboard/Component';
+import Store from './components/Content/Store';
+import Components from './components/Content/Components';
+import Networks from './components/Content/Networks';
 import {IndexRoute, Route} from 'react-router';
 
 export default (
-  <Route path="/" component={App}>
+  <Route path="/" component={Application}>
     <IndexRoute name="dashboard" component={Dashboard}/>
     <Route name="components" path="/components" component={Components}/>
     <Route name="networks" path="/networks" component={Networks}/>

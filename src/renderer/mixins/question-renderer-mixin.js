@@ -1,9 +1,9 @@
-import CheckboxPrompt from '../prompts/checkbox.jsx';
-import ConfirmPrompt from '../prompts/confirm.jsx';
-import ExpandPrompt from '../prompts/expand.jsx';
-import FolderPrompt from '../prompts/folder.jsx';
-import InputPrompt from '../prompts/input.jsx';
-import ListPrompt from '../prompts/list.jsx';
+import CheckboxPrompt from '../components/prompts/checkbox';
+import ConfirmPrompt from '../components/prompts/confirm';
+import ExpandPrompt from '../components/prompts/expand';
+import FolderPrompt from '../components/prompts/folder';
+import InputPrompt from '../components/prompts/input';
+import ListPrompt from '../components/prompts/list';
 
 export default {
 

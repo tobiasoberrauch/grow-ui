@@ -9,7 +9,5 @@ export default function configureStore(initialState) {
     routing: routerReducer
   });
 
-  console.log('rootReducers', rootReducers);
-
   return createStore(rootReducers, initialState, applyMiddleware(thunk));
 }

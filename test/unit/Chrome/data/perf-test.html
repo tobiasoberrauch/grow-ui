@@ -1,0 +1,25 @@
+<!doctype html>
+
+<p>Follow the readme directions</p>
+
+
+<script>
+	var garbage 	= [];
+	var garbageSize	= 1024 * 1024 * 6;
+	var garbageIdx	= 0;
+	function makeGarbage(amount){
+		for(var i = 0; i < amount; i++){
+			//garbage[garbageIdx]	= new Object();
+			garbage[garbageIdx]	= {};
+			garbageIdx	= (garbageIdx+1) % garbageSize;
+		}
+	}
+
+
+	function startTest(){
+		var times = 1000;
+		while (--times){
+			makeGarbage(1024);
+		}
+	}
+</script>
