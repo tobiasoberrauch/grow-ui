@@ -3,7 +3,7 @@ var Insight = function () {
 var crypto = require('crypto');
 var querystring = require('querystring');
 var _ = require('lodash');
-var pkgJson = require('../../../package.json');
+var pkgJson = require('../../../../package.json');
 
 export default Insight;
 

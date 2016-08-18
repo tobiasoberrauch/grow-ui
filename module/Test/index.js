@@ -1,5 +1,5 @@
 const glob = require('glob');
-const TestRunner = require('./Test/TestRunner');
+const TestRunner = require('./.././TestRunner');
 
 let testRunner = new TestRunner();
 testRunner.run(glob(), (err, results) => {

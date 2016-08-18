@@ -14,7 +14,7 @@ export default class ApplicationWindow extends EventEmitter {
     super();
 
     this.loadSettings = {
-      bootstrapScript: require.resolve('../renderer/main')
+      bootstrapScript: require.resolve('../../Renderer/src/main')
     };
     this.loadSettings = _.extend(this.loadSettings, options);
 
@@ -31,7 +31,7 @@ export default class ApplicationWindow extends EventEmitter {
   }
 
   show() {
-    var targetPath = path.resolve(__dirname, '..', '..', 'public', 'index.html');
+    var targetPath = path.resolve(__dirname, '..', '..', '..', 'public', 'index.html');
     var targetUrl = url.format({
       protocol: 'file',
       pathname: targetPath,
@@ -101,7 +101,7 @@ export default class ApplicationWindow extends EventEmitter {
       return;
     }
 
-    this.process = fork(path.join(__dirname, '..', 'provisioner', 'yo', 'index.js'));
+    this.process = fork(path.join(__dirname, '..', '..', 'Provisioner', 'src', 'yo', 'index.js'));
 
     this.process.on('message', (message) => {
       console.log('APP', message);

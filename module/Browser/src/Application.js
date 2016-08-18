@@ -15,7 +15,7 @@ class Application extends EventEmitter {
   constructor() {
     super();
 
-    this.pkgJson = require('../../package.json');
+    this.pkgJson = require('../../../package.json');
     this.windows = [];
 
     this.handleEvents();
@@ -54,6 +54,7 @@ class Application extends EventEmitter {
     let bootstrapScript;
     let exitWhenDone = options.exitWhenDone;
 
+    // todo pathes
     try {
       bootstrapScript = require.resolve(path.resolve(__dirname, 'spec', 'helpers', 'bootstrap'));
     } catch (error) {
@@ -73,7 +74,7 @@ class Application extends EventEmitter {
    * Opens up a new applicationWindow and runs the application.
    */
   openWindow() {
-    let iconPath = path.resolve(__dirname, '..', '..', 'resources', 'app.png');
+    let iconPath = path.resolve(__dirname, '..', '..', '..', 'data', 'resources', 'app.png');
 
     let applicationWindow = new ApplicationWindow({
       title: this.pkgJson.productName,

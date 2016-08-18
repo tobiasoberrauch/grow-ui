@@ -1,7 +1,7 @@
 // https://github.com/pmdartus/snapline/blob/master/index.js
 
 const ScreenshotService = require('../../src/Chrome/ScreenshotService');
-const TestCase = require('../Test/TestCase');
+const TestCase = require('.././TestCase');
 
 class ScreenshotServiceTest extends TestCase {
     test() {

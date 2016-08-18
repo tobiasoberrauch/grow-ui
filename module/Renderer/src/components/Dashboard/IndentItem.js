@@ -1,5 +1,5 @@
 import React from 'react';
-import CasualFashionService from '../../../../module/CasualFashion/src/CasualFashionService';
+import CasualFashionService from '../../../../CasualFashion/src/CasualFashionService';
 import {Table, TableHeader} from '../DataTable';
 
 export default React.createClass({
